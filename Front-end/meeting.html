@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetings</title>
+</head>
+<body>
+    <h1>Meetings</h1>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Address</th>
+                <th>Time</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody id="meetingTable">
+            <tr>
+                <td></td>
+            </tr>
+            
+        </tbody>
+
+    </table>
+
+
+    
+</body>
+<script>
+    const meetingTable = document.getElementById('meetingTable')
+
+    async function getMeetings(){
+        const response = await fetch("http://localhost:8080/meeting");
+        const meetings = await response.json();
+        console.log(meetings);
+        return meetings;
+    }
+
+    async function renderMeetingTable(){
+        const testMeetings = await getMeetings();
+
+        for(const meeting of testMeetings){
+            const meetingRow = document.createElement('tr');
+
+            const meetingId = document.createElement('td');
+            meetingId.innerText = meeting.meeting_id;
+            
+            const meetingAddress = document.createElement('td');
+            meetingAddress.innerText = meeting.address;
+
+            const meetingTime = document.createElement('td');
+            let epochTime = new Date(meeting.time * 1000);
+            epochTime = epochTime.toLocaleString();
+            meetingTime.innerText = epochTime;
+            
+            
+
+            const meetingSummary = document.createElement('td');
+            meetingSummary.innerText = meeting.summary;
+
+            meetingRow.appendChild(meetingId);
+            meetingRow.appendChild(meetingAddress);
+            meetingRow.appendChild(meetingTime);
+            meetingRow.appendChild(meetingSummary);
+
+            meetingTable.appendChild(meetingRow);
+        }
+    }
+    renderMeetingTable();
+</script>
+</html>

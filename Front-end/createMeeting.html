@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Meeting</title>
+</head>
+<body>
+    <nav><a href="">home</a></nav>
+    
+    <form >
+        <fieldset>
+            <legend>Creating Meeting</legend>
+
+            <ul>
+                <li>
+                    <label for="inputAddress">Address:</label>
+                    <select id="inputAddress"name="address" >
+                        <option value="Gotham City Hall">Gotham City Hall</option>
+                        <option value="Room 210">Room 210</option>
+                        <option value="No Mans Land">No Man's Land</option>
+                    </select>
+                    </li>
+                    <li>
+                    <label for="inputTime">Date:</label>
+                    <input id="inputTime" type="datetime-local" />
+                    </li>
+                    <li>
+                    <label for="inputSummary">Summary</label>
+                    <textarea id="inputSummary" type="text"></textarea>
+                </li>
+            </ul>
+        </fieldset>
+        <button>Submit Meeting</button>
+
+    </form>
+
+    
+</body>
+<script>
+    const inputAddress = document.getElementById("inputAddress");
+    const inputTime = document.getElementById("inputTime");
+    const inputSummary = document.getElementById("inputSummary");
+
+    document.addEventListener("submit", async event =>{
+        event.preventDefault();
+
+        let someDate = new Date(inputTime.value);
+        someDate = someDate.getTime()/1000;
+        const time = someDate;
+        console.log(someDate);
+
+
+        const address = inputAddress.value;
+        const summary = inputSummary.value;
+        const meeting = {meeting_id:0, address, time, summary};
+
+        const response = await fetch("http://localhost:8080/meeting",{
+            method:"POST",
+            body: JSON.stringify(meeting),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+        if(response.status === 201){
+            alert("Successfully created meeting!");
+            inputSummary.value = "";
+            inputTime.value = "";
+        } else{
+            alert("something went wrong!");
+        }
+
+
+    });
+
+
+
+</script>
+</html>

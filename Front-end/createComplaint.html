@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Complaint</title>
+</head>
+<body>
+
+
+    <header>
+        <img src="images/Gotham_skyline1.jpg" alt="">
+    </header>
+
+    <input id="toggle-menu" type="checkbox" />
+		<label for="toggle-menu" class="menu-on">Menu</label>
+		<label for="toggle-menu" class="menu-off"></label>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Sign In</a></li>
+            <li><a href="meeting.html">View Meetings</a></li>
+        </ul>
+    </nav>
+    
+<div>
+    <form>
+        
+           
+            <legend>Create Complaint</legend>
+            <ul>
+                <li>
+                <label for="inputType">Type</label>
+                <select id="inputType" name="type">
+                    <option value="CRIME">Crime</option>
+                    <option value="LITTERING">Littering</option>
+                    <option value="STEALING">Stealing</option>
+                    <option value="OTHER">Other</option>
+                </select>
+                </li>
+                <li>
+                <label for="inputDescription">Description</label>
+                <textarea id="inputDescription" type="text"></textarea>
+                </li>
+            </ul>
+            
+            <button>Submit Complaint</button>
+        
+        
+    </form>
+</div>
+</body>
+<script>
+    const inputType = document.getElementById("inputType");
+    const inputDescription = document.getElementById("inputDescription")
+
+    document.addEventListener("submit", async event =>{
+        event.preventDefault();
+
+        const type = inputType.value;
+        const description = inputDescription.value;
+        const complaint = {complaint_id:0, type, description, status:'UNREVIEWED', meeting_id:0};
+
+        const response = await fetch("http://localhost:8080/complaint",{
+            method:"POST",
+            body: JSON.stringify(complaint),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+        if(response.status === 201){
+            alert("Succesfully created complaint!");
+            inputDescription.value = "";
+        } else{
+            alert("something went wrong!");
+        }
+    });
+
+
+
+</script>
+</html>
