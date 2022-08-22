@@ -55,7 +55,7 @@
                 window.location = "./unregConstituent.html"
             }
         }
-        if(response.status === 404){
+        if(response.status === 404 || response.status === 400){
             alert("username or password is incorrect");
         }
 

@@ -34,7 +34,7 @@
     const meetingTable = document.getElementById('meetingTable')
 
     async function getMeetings(){
-        const response = await fetch("http://localhost:8080/meeting");
+        const response = await fetch("http://localhost:8080/meetings");
         const meetings = await response.json();
         console.log(meetings);
         return meetings;

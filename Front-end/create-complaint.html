@@ -30,8 +30,8 @@
             <legend>Create Complaint</legend>
             <ul>
                 <li>
-                <label for="inputType">Type</label>
-                <select id="inputType" name="type">
+                <label for="inputOffense">Offense</label>
+                <select id="inputOffense" name="offense">
                     <option value="CRIME">Crime</option>
                     <option value="LITTERING">Littering</option>
                     <option value="STEALING">Stealing</option>
@@ -51,17 +51,17 @@
 </div>
 </body>
 <script>
-    const inputType = document.getElementById("inputType");
+    const inputOffense = document.getElementById("inputOffense");
     const inputDescription = document.getElementById("inputDescription")
 
     document.addEventListener("submit", async event =>{
         event.preventDefault();
 
-        const type = inputType.value;
+        const offense = inputOffense.value;
         const description = inputDescription.value;
-        const complaint = {complaint_id:0, type, description, status:'UNREVIEWED', meeting_id:0};
+        const complaint = {complaint_id:0, offense, description, status:'UNREVIEWED', meeting_id:0};
 
-        const response = await fetch("http://localhost:8080/complaint",{
+        const response = await fetch("http://localhost:8080/complaints",{
             method:"POST",
             body: JSON.stringify(complaint),
             headers:{
