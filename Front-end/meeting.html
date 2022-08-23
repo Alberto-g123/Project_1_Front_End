@@ -6,7 +6,23 @@
     <title>Meetings</title>
 </head>
 <body>
+
+    <header>
+        <img src="images/Gotham_skyline1.jpg" alt="">
+    </header>
+
+    <input id="toggle-menu" type="checkbox" />
+		<label for="toggle-menu" class="menu-on">Menu</label>
+		<label for="toggle-menu" class="menu-off"></label>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Sign In</a></li>
+            <li><a href="create-complaint.html">Create Complaint</a></li>
+        </ul>
+    </nav>
     <h1>Meetings</h1>
+
 
     <table>
 
@@ -20,7 +36,7 @@
         </thead>
         <tbody id="meetingTable">
             <tr>
-                <td></td>
+                
             </tr>
             
         </tbody>
@@ -42,26 +58,27 @@
 
     async function renderMeetingTable(){
         const testMeetings = await getMeetings();
-
-        for(const meeting of testMeetings){
+        
+        
+        for(let i = 1; i < Object.keys(testMeetings).length; i++){
             const meetingRow = document.createElement('tr');
 
             const meetingId = document.createElement('td');
-            meetingId.innerText = meeting.meeting_id;
+            meetingId.innerText = testMeetings[i].meeting_id;
             
             const meetingAddress = document.createElement('td');
-            meetingAddress.innerText = meeting.address;
+            meetingAddress.innerText = testMeetings[i].address;
 
             const meetingTime = document.createElement('td');
-            let epochTime = new Date(meeting.time * 1000);
+            let epochTime = new Date(testMeetings[i].time * 1000);
             epochTime = epochTime.toLocaleString();
             meetingTime.innerText = epochTime;
             
             
-
             const meetingSummary = document.createElement('td');
-            meetingSummary.innerText = meeting.summary;
+            meetingSummary.innerText = testMeetings[i].summary;
 
+            
             meetingRow.appendChild(meetingId);
             meetingRow.appendChild(meetingAddress);
             meetingRow.appendChild(meetingTime);
@@ -69,7 +86,12 @@
 
             meetingTable.appendChild(meetingRow);
         }
+        
+        
     }
+
+    
+
     renderMeetingTable();
 </script>
 </html>

@@ -5,6 +5,28 @@
     z-index:1001;
 }
 
+table{
+    width: 50%;
+    margin-top: 5%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(0, 0, 0, 0.787);
+}
+table, th, td{
+    border: 1px solid pink;
+    color: #fff;
+    
+}
+th{
+    width: 25%;
+    font-size: 2em;
+}
+td{
+    padding-bottom: 10px;
+    font-size: 2em;
+}
+
 
 header img {
     text-align: left;
@@ -47,6 +69,9 @@ select, input{
     font-size: .8em;
 }
 
+input:hover, textarea:hover, select:hover{
+    background-color: #fff;
+}
 
 textarea{
     width: 80%;
