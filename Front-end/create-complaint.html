@@ -61,7 +61,7 @@
         const description = inputDescription.value;
         const complaint = {complaint_id:0, offense, description, status:'UNREVIEWED', meeting_id:0};
 
-        const response = await fetch("http://localhost:8080/complaints",{
+        const response = await fetch("http://localhost:4040/complaints",{
             method:"POST",
             body: JSON.stringify(complaint),
             headers:{

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Complaints</title>
+</head>
+<body>
+    <header>
+        <img src="images/Gotham_skyline1.jpg" alt="">
+    </header>
+
+    <input id="toggle-menu" type="checkbox" />
+		<label for="toggle-menu" class="menu-on">Menu</label>
+		<label for="toggle-menu" class="menu-off"></label>
+    <nav>
+        <ul>
+            <li><a href="council.html">Home</a></li>
+            <li><a href="council-meeting.html">View Meetings</a></li>
+            <li><a href="create-meeting.html">Create Meetings</a></li>
+            <li><a href="index.html">Sign Out</a></li>
+        </ul>
+    </nav>
+
+    <h1>Review Complaints</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Offense</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Meeting ID</th>
+                <th>High Priority</th>
+                <th>Low Priority</th>
+                <th>Ignore</th>
+            </tr>
+        </thead>
+        <tbody id="complaintTable"></tbody>
+        
+
+    </table>
+    
+</body>
+<script>
+
+const complaintTableBody = document.getElementById("complaintTable");
+
+async function getComplaints() {
+    const httpResponse = await fetch('http://localhost:4040/complaints');
+    const complaints = await httpResponse.json();
+    return complaints;
+}
+
+async function renderComplaintTable() {
+    const testComplaint = await getComplaints()
+
+    for (const complaint of testComplaint) {
+        const complaintRow = document.createElement('tr');
+
+        const complaint_idData = document.createElement('td');
+        complaint_idData.innerText = complaint.complaint_id
+
+        const complaintOffenseData = document.createElement('td');
+        complaintOffenseData.innerText = complaint.offense;
+
+        const complaintDescriptionData = document.createElement('td');
+        complaintDescriptionData.innerText = complaint.description;
+
+        const complaintStatusData = document.createElement('td');
+        complaintStatusData.innerText = complaint.status;
+
+        const complaintMeetingIdData = document.createElement('td');
+        complaintMeetingIdData.innerText = complaint.meeting_id;
+
+        const highBtnTD = document.createElement('td');
+        const highPriorityBtn = document.createElement('button');
+        highBtnTD.appendChild(highPriorityBtn);
+        highPriorityBtn.innerText = "High Priority";
+        highPriorityBtn.dataset.complaint_id = complaint.complaint_id;
+        highPriorityBtn.dataset.status = "high";
+        highPriorityBtn.addEventListener('click', async event => {
+            event.preventDefault();
+            
+            const complaint_id = highPriorityBtn.dataset.complaint_id;
+            const status = highPriorityBtn.dataset.status;
+            
+            const response = await fetch(`http://localhost:4040/complaints/${complaint_id}/${status}`,{
+                    method:"PATCH"
+                });
+                const complaints = await response.json();
+                if (response.status === 202) {
+                    alert("Status updated.")
+                    location.reload();
+                } else if (response.status === 304) {
+                    alert("Error. Status not changed.")
+                }
+            });
+        
+        const lowBtnTD = document.createElement('td');
+        const lowPriorityBtn = document.createElement('button');
+        lowBtnTD.appendChild(lowPriorityBtn);
+        lowPriorityBtn.innerText = "Low Priority";
+        lowPriorityBtn.dataset.complaint_id = complaint.complaint_id;
+        lowPriorityBtn.dataset.status = "low";
+        lowPriorityBtn.addEventListener('click', async event => {
+            event.preventDefault();
+            
+            const complaint_id = lowPriorityBtn.dataset.complaint_id;
+            const status = lowPriorityBtn.dataset.status;
+            
+            const response = await fetch(`http://localhost:4040/complaints/${complaint_id}/${status}`,{
+                    method:"PATCH"
+                });
+                const complaints = await response.json();
+                if (response.status === 202) {
+                    alert("Status updated.")
+                    location.reload();
+                } else if (response.status === 304) {
+                    alert("Error. Status not changed.")
+                }
+            });
+
+        const ignoreBtnTD = document.createElement('td');
+        const ignoreBtn = document.createElement('button');
+        ignoreBtnTD.appendChild(ignoreBtn);
+        ignoreBtn.innerText = "Ignore";
+        ignoreBtn.dataset.complaint_id = complaint.complaint_id;
+        ignoreBtn.dataset.status = "ignore";
+        ignoreBtn.addEventListener('click', async event => {
+            event.preventDefault();
+            
+            const complaint_id = ignoreBtn.dataset.complaint_id;
+            const status = ignoreBtn.dataset.status;
+            
+            const response = await fetch(`http://localhost:4040/complaints/${complaint_id}/${status}`,{
+                    method:"PATCH"
+                });
+                const complaints = await response.json();
+                if (response.status === 202) {
+                    alert("Status updated.")
+                    location.reload();
+                } else if (response.status === 304) {
+                    alert("Error. Status not changed.")
+                }
+            });
+
+
+        complaintRow.appendChild(complaint_idData);
+        complaintRow.appendChild(complaintOffenseData);
+        complaintRow.appendChild(complaintDescriptionData);
+        complaintRow.appendChild(complaintStatusData);
+        complaintRow.appendChild(complaintMeetingIdData);
+        complaintRow.appendChild(highBtnTD);
+        complaintRow.appendChild(lowBtnTD);
+        complaintRow.appendChild(ignoreBtnTD);
+
+        complaintTableBody.appendChild(complaintRow);
+    }
+}
+
+renderComplaintTable();
+
+
+</script>
+</html>

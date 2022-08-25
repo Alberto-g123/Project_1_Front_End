@@ -16,7 +16,9 @@
     <nav>
         <ul>
             <li><a href="council.html">Home</a></li>
-            <li><a href="index.html">Sign Out</a></li>
+            <li><a href="council-meeting.html">View Meetings</a></li>
+            <li><a href="review-complaints.html">Review Complaints</a></li>
+            <li><a href="index.html">Sign Out</a></li>            
         </ul>
     </nav>
     
@@ -67,7 +69,7 @@
         const summary = inputSummary.value;
         const meeting = {meeting_id:0, address, time, summary};
 
-        const response = await fetch("http://localhost:8080/meetings",{
+        const response = await fetch("http://localhost:4040/meetings",{
             method:"POST",
             body: JSON.stringify(meeting),
             headers:{
