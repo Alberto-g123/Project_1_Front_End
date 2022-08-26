@@ -31,6 +31,7 @@
                 <th>Description</th>
                 <th>Status</th>
                 <th>Meeting ID</th>
+                <th>Submit Meeting ID</th>
                 <th>High Priority</th>
                 <th>Low Priority</th>
                 <th>Ignore</th>
@@ -73,12 +74,49 @@ async function renderComplaintTable() {
         const complaintMeetingIdData = document.createElement('td');
         complaintMeetingIdData.innerText = complaint.meeting_id;
 
+
+        const meetingBtnTD = document.createElement('td');
+        const meetingInput = document.createElement('input');
+        const meetingBtn = document.createElement('button');
+        meetingBtnTD.appendChild(meetingInput);
+        meetingBtnTD.appendChild(meetingBtn);
+        meetingBtn.innerText="Submit";
+        meetingBtn.dataset.complaint_id = complaint.complaint_id;
+        
+
+        
+        meetingBtn.addEventListener("click", async event =>{
+            event.preventDefault();
+
+            const complaint_id = meetingBtn.dataset.complaint_id;
+            const meeting = meetingInput.value;
+            console.log(complaint_id);
+            console.log(meeting);
+
+            const response = await fetch(`http://localhost:4040/complaints/${complaint_id}/${meeting}`,{
+                method:"PUT"
+            });
+            const complaints = await response.json();
+            if (response.status === 202) {
+                    alert("Status updated.")
+                    location.reload();
+                } else if (response.status === 304) {
+                    alert("Error. Status not changed.")
+                }
+
+
+        })
+
+
+
+
         const highBtnTD = document.createElement('td');
         const highPriorityBtn = document.createElement('button');
         highBtnTD.appendChild(highPriorityBtn);
         highPriorityBtn.innerText = "High Priority";
         highPriorityBtn.dataset.complaint_id = complaint.complaint_id;
         highPriorityBtn.dataset.status = "high";
+
         highPriorityBtn.addEventListener('click', async event => {
             event.preventDefault();
             
@@ -151,6 +189,7 @@ async function renderComplaintTable() {
         complaintRow.appendChild(complaintDescriptionData);
         complaintRow.appendChild(complaintStatusData);
         complaintRow.appendChild(complaintMeetingIdData);
+        complaintRow.appendChild(meetingBtnTD)
         complaintRow.appendChild(highBtnTD);
         complaintRow.appendChild(lowBtnTD);
         complaintRow.appendChild(ignoreBtnTD);

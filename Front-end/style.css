@@ -14,15 +14,15 @@ h1{
     margin-right: auto;
     color: #fff;
     background-color: rgba(0, 0, 0, 0.821);
-    border-radius: 50%;
+    border-radius: 15%;
 }
 table{
-    width: 50%;
+    width: 70%;
     margin-top: 1%;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    background-color: rgba(0, 0, 0, 0.787);
+    background-color: rgba(0, 0, 0, 0.915);
 }
 table, th, td{
     border: 1px solid pink;
@@ -31,11 +31,11 @@ table, th, td{
 }
 th{
     width: 25%;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 td{
     padding-bottom: 10px;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 
@@ -94,7 +94,7 @@ textarea{
 }
 
 button{
-    width: 50%;
+    width: 65%;
     height: 50px;
     background-color: rgb(121, 119, 119);
 }
